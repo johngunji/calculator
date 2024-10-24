@@ -1,88 +1,73 @@
 #include <stdio.h>
 
-int add(int i, int j) {
-    return (i + j);
+int add(int a, int b) {
+    return a + b;
 }
 
-int subtract(int i, int j) {
-    return (i - j);
+int subtract(int a, int b) {
+    return a - b;
 }
 
-int multiply(int i, int j) {
-    return (i * j);
+int multiply(int a, int b) {
+    return a * b;
 }
 
-float divide(int i, int j) {
-    if (j == 0) {
-        printf("Error: Division by zero is not allowed.\n");
-        return 0; // Return 0 to indicate an error.
+float divide(int a, int b) {
+    if (b == 0) {
+        printf("Error! Division by zero is not allowed.\n");
+        return 0;
     }
-    return ((float) i / j);  // Explicit type casting to float for decimal results.
+    return (float)a / b;
+}
+
+int square(int a) {
+    return a * a;
+}
+
+int cube(int a) {
+    return a * a * a;
 }
 
 int main() {
-    int a, b;
-    char operation;
-    char confirm = 'n';
+    int num1, num2;
+    char operator;
 
-    do {
-        printf("\nChoose an operation (+, -, *, /, ^, #, i):\n");
-        printf("+: Addition\n");
-        printf("-: Subtraction\n");
-        printf("*: Multiplication\n");
-        printf("/: Division\n");
-        printf("^: Square of a number\n");
-        printf("#: Cube of a number\n");
-        printf("i: Inverse of a number\n");
-        
-        printf("Enter operation: ");
-        scanf(" %c", &operation);
+    printf("Enter an operator (+, -, *, /, ^ for square, # for cube): ");
+    scanf(" %c", &operator); // Note: The space before %c helps in ignoring any newline characters
 
-        switch (operation) {
+    if (operator == '^' || operator == '#') {
+        // For square or cube, only one number is required
+        printf("Enter an integer: ");
+        scanf("%d", &num1);
+
+        if (operator == '^') {
+            printf("Square of %d = %d\n", num1, square(num1));
+        } else if (operator == '#') {
+            printf("Cube of %d = %d\n", num1, cube(num1));
+        }
+    } else {
+        // For regular arithmetic, two numbers are required
+        printf("Enter two integers: ");
+        scanf("%d %d", &num1, &num2);
+
+        switch (operator) {
             case '+':
-                printf("Enter two integers: ");
-                scanf("%d %d", &a, &b);
-                printf("The result of %d + %d is %d\n", a, b, add(a, b));
+                printf("%d + %d = %d\n", num1, num2, add(num1, num2));
                 break;
             case '-':
-                printf("Enter two integers: ");
-                scanf("%d %d", &a, &b);
-                printf("The result of %d - %d is %d\n", a, b, subtract(a, b));
+                printf("%d - %d = %d\n", num1, num2, subtract(num1, num2));
                 break;
             case '*':
-                printf("Enter two integers: ");
-                scanf("%d %d", &a, &b);
-                printf("The result of %d * %d is %d\n", a, b, multiply(a, b));
+                printf("%d * %d = %d\n", num1, num2, multiply(num1, num2));
                 break;
             case '/':
-                printf("Enter two integers: ");
-                scanf("%d %d", &a, &b);
-                if (b != 0) {
-                    printf("The result of %d / %d is %.2f\n", a, b, divide(a, b));
-                }
-                break;
-            case '^':
-                printf("Enter an integer: ");
-                scanf("%d", &a);
-                printf("Will be implemented soon...\n");
-                break;
-            case '#':
-                printf("Enter an integer: ");
-                scanf("%d", &a);
-                printf("Will be implemented soon...\n");
-                break;
-            case 'i':
-                printf("Enter an integer: ");
-                scanf("%d", &a);
-                printf("Will be implemented soon...\n");
+                printf("%d / %d = %.2f\n", num1, num2, divide(num1, num2));
                 break;
             default:
-                printf("Invalid operation. Please try again.\n");
+                printf("Invalid operator!\n");
         }
-
-        printf("Do you want to perform another operation [y/N]? ");
-        scanf(" %c", &confirm);
-    } while (confirm == 'y' || confirm == 'Y');
+    }
 
     return 0;
 }
+
